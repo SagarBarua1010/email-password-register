@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 
 const Login = () => {
-  const {signIn} = useContext(AuthContext);
+  const {signIn, signInWithGoogle } = useContext(AuthContext);
   const handleLogin = (event) => {
     event.preventDefault();
 
@@ -23,6 +23,16 @@ const Login = () => {
       })
 
   };
+  const handleGoogleSignIn = () =>{
+    signInWithGoogle()
+    .then(result=>{
+      const loggedUser = result.user;
+      console.log(loggedUser);
+    })
+    .catch(error=>{
+      console.log(error)
+    })
+  }
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">
@@ -66,8 +76,11 @@ const Login = () => {
               </div>
             </form>
             <Link to="/register">
-              <button className="btn  btn-link">NEW TO AUTH MASTER</button>
+              <button className="btn  btn-link">NEW TO AUTH MASTER? Please Register</button>
             </Link>
+            <div>
+            <button onClick={handleGoogleSignIn} className="btn btn-primary">Google</button>
+            </div>
           </div>
         </div>
       </div>
